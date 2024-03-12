@@ -5,7 +5,9 @@ export default function Home() {
   return (
     <div className="flex justify-center flex-start">
       <h1>Dwarf Hunt</h1>
-      <Button href="secondpg"> asasdasd </Button>
+      <Button sx={{ display: "flex" }} href="secondpg">
+        asasdasd
+      </Button>
     </div>
   );
 }
