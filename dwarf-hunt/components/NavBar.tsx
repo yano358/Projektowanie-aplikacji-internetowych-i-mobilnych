@@ -33,16 +33,16 @@ const NavBar: React.FC = () => {
   return (
     <BlackAppBar>
       <CenteredToolbar>
-        <Link href="/" passHref>
-          <WhiteButton>Mapa</WhiteButton>
-        </Link>
-
-        <Link href="/browse" passHref>
-          <WhiteButton>Spis Krasnali</WhiteButton>
+        <Link href="/manageaccount" passHref>
+          <WhiteButton>Account</WhiteButton>
         </Link>
 
         <Link href="/achievements" passHref>
-          <WhiteButton>Osiągnięcia</WhiteButton>
+          <WhiteButton>Your Achievements</WhiteButton>
+        </Link>
+
+        <Link href="/leaderboard" passHref>
+          <WhiteButton>Leaderboard</WhiteButton>
         </Link>
       </CenteredToolbar>
     </BlackAppBar>

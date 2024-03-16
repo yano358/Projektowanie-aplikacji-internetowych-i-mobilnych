@@ -1,19 +1,26 @@
 "use client";
-import { Button, Box } from "@mui/material";
-import {
-  useLoadScript,
-  GoogleMap,
-  Marker,
-  InfoWindow,
-} from "@react-google-maps/api";
+import { Box } from "@mui/material";
+import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 import { useMemo, useState, useEffect } from "react";
+import Link from "next/link";
+
+import { supabase } from "../../config/supabase";
 
 import NavBar from "../../components/NavBar";
+import DwarfCardComponent from "../../components/DwarfCardComponent";
 
 export default function Home() {
   const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
 
   useEffect(() => {
+    const fetchDwarvesData = async () => {
+      const data = await fetchDwarves();
+      if (data) {
+        setDwarves(data);
+      }
+    };
+    fetchDwarvesData();
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -37,6 +44,23 @@ export default function Home() {
 
   const center = useMemo(() => ({ lat: 51.112207, lng: 17.039258 }), []);
 
+  const [dwarves, setDwarves] = useState<any[]>([]);
+  const fetchDwarves = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("dwarves")
+        .select("name, description");
+      if (error) {
+        throw error;
+      }
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching dwarves:", error);
+      return null;
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -59,23 +83,22 @@ export default function Home() {
             justifyContent: "center",
             flexDirection: "column",
             alignItems: "center",
-            gap: 5,
+            gap: 1,
           }}
         >
           <NavBar />
           <Box
             sx={{
-              width: "1000px",
-              height: "800px",
-              backgroundColor: "red",
+              width: "full",
+              height: "400px",
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "between",
             }}
           >
             <GoogleMap
               mapContainerStyle={{
-                width: "1000px",
-                height: "800px",
+                width: "600px",
+                height: "400px",
               }}
               center={center}
               zoom={14}
@@ -87,6 +110,25 @@ export default function Home() {
                 icon={"http://maps.google.com/mapfiles/ms/icons/purple-dot.png"}
               />
             </GoogleMap>
+          </Box>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              gap: 3,
+            }}
+          >
+            {dwarves.map((dwarf, index) => (
+              <div key={index}>
+                <Link href={`discussion/${encodeURIComponent(dwarf.name)}`}>
+                  <DwarfCardComponent
+                    name={dwarf.name}
+                    description={dwarf.description}
+                  />
+                </Link>
+              </div>
+            ))}
           </Box>
         </Box>
       )}
