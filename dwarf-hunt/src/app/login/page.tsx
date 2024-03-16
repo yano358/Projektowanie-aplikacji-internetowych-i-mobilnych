@@ -1,7 +1,8 @@
 "use client";
 import { Button, Box, TextField } from "@mui/material";
-import { Console, log } from "console";
-import { use, useState } from "react";
+import { useState } from "react";
+
+import NavBar from "../../../components/NavBar";
 
 const Login = () => {
   const [username, setUsername] = useState<string>("");
@@ -21,18 +22,14 @@ const Login = () => {
         display: "flex",
         width: "100%",
         height: "100%",
-        justifyContent: "center",
         position: "absolute",
         top: 0,
         left: 0,
         alignItems: "center",
-        // flexDirection: "column",
-        // height: "100%",
-        // width: "auto",
-        //padding: "16px",
-        backgroundColor: "lightyellow",
+        flexDirection: "column",
       }}
     >
+      <NavBar />
       <Box
         sx={{
           display: "flex",

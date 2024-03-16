@@ -8,6 +8,8 @@ import {
 } from "@react-google-maps/api";
 import { useMemo, useState, useEffect } from "react";
 
+import NavBar from "../../components/NavBar";
+
 export default function Home() {
   const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
 
@@ -42,8 +44,6 @@ export default function Home() {
         width: "100%",
         height: "100%",
         justifyContent: "center",
-        padding: "20px",
-        marginTop: "20px",
       }}
     >
       {!isLoaded ? (
@@ -51,28 +51,43 @@ export default function Home() {
       ) : (
         <Box
           sx={{
-            width: "1000px",
-            height: "800px",
-            backgroundColor: "red",
+            position: "relative",
+            width: "100%",
+            height: "auto",
+            flex: 1,
             display: "flex",
             justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 5,
           }}
         >
-          <GoogleMap
-            mapContainerStyle={{
+          <NavBar />
+          <Box
+            sx={{
               width: "1000px",
               height: "800px",
+              backgroundColor: "red",
+              display: "flex",
+              justifyContent: "center",
             }}
-            center={center}
-            zoom={14}
           >
-            {/* add random dwarf hook later*/}
-            <Marker position={center} />
-            <Marker
-              position={currentLocation}
-              icon={"http://maps.google.com/mapfiles/ms/icons/purple-dot.png"}
-            />
-          </GoogleMap>
+            <GoogleMap
+              mapContainerStyle={{
+                width: "1000px",
+                height: "800px",
+              }}
+              center={center}
+              zoom={14}
+            >
+              {/* add random dwarf hook later*/}
+              <Marker position={center} />
+              <Marker
+                position={currentLocation}
+                icon={"http://maps.google.com/mapfiles/ms/icons/purple-dot.png"}
+              />
+            </GoogleMap>
+          </Box>
         </Box>
       )}
     </Box>
