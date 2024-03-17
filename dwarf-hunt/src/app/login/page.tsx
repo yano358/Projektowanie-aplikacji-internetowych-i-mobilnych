@@ -1,21 +1,23 @@
 "use client";
 import { Button, Box, TextField } from "@mui/material";
-import { useState } from "react";
-
+import { useState, useTransition } from "react";
+import { signIn } from "../actions";
 import NavBar from "../../../components/NavBar";
 
 const Login = () => {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<String>("");
-  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newusername = event.target.value;
-    setUsername(newusername);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = event.target.value;
+    setEmail(newEmail);
   };
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newpassword = event.target.value;
     setPassword(newpassword);
   };
-
+  const handleLoginClick = () => {
+    signIn({ email: email, password: password });
+  };
   return (
     <Box
       sx={{
@@ -46,20 +48,23 @@ const Login = () => {
         }}
       >
         <TextField
+          required
           id="outlined-basic"
-          label="Username"
+          label="Email"
           variant="outlined"
-          value={username}
-          onChange={handleUsernameChange}
+          value={email}
+          onChange={handleEmailChange}
         />
         <TextField
+          required
           id="outlined-basic"
           label="Password"
           variant="outlined"
+          type="password"
           value={password}
           onChange={handlePasswordChange}
         />
-        <Button variant="contained" href="/">
+        <Button variant="contained" onClick={handleLoginClick}>
           Log in
         </Button>
       </Box>
