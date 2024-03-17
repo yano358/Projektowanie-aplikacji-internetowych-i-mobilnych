@@ -121,7 +121,7 @@ export default function Home() {
           >
             {dwarves.map((dwarf, index) => (
               <div key={index}>
-                <Link href={`discussion/${encodeURIComponent(dwarf.name)}`}>
+                <Link href={`/discussion/${encodeURIComponent(dwarf.name)}`}>
                   <DwarfCardComponent
                     name={dwarf.name}
                     description={dwarf.description}
