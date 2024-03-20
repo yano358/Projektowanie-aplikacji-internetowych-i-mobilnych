@@ -1,8 +1,10 @@
 "use client";
 import { Button, Box, TextField } from "@mui/material";
 import { useState } from "react";
-import { signIn } from "../actions";
+import { signIn, signOut } from "../actions";
 import NavBar from "../../../components/NavBar";
+import SignOut from "../../../components/SignOut";
+import { redirect } from "next/navigation";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -15,8 +17,11 @@ const Login = () => {
     const newpassword = event.target.value;
     setPassword(newpassword);
   };
-  const handleLoginClick = () => {
-    signIn({ email: email, password: password });
+  const handleLoginClick = async () => {
+    await signIn({ email: email, password: password });
+  };
+  const LogOut = async () => {
+    await signOut();
   };
   return (
     <Box
@@ -66,6 +71,9 @@ const Login = () => {
         />
         <Button variant="contained" onClick={handleLoginClick}>
           Log in
+        </Button>
+        <Button variant="contained" onClick={LogOut}>
+          Log out
         </Button>
       </Box>
     </Box>
