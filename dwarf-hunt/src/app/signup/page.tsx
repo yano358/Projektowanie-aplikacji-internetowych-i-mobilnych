@@ -1,27 +1,39 @@
 "use client";
 import { Button, Box, TextField } from "@mui/material";
 import { useState } from "react";
-import { signIn, signOut } from "../actions";
-import NavBar from "../../../components/NavBar";
-import SignOut from "../../../components/SignOut";
-import { redirect } from "next/navigation";
 
+import NavBar from "../../../components/NavBar";
+import { signUp } from "../actions/index";
 const Login = () => {
-  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newEmail = event.target.value;
-    setEmail(newEmail);
+  const [email, setEmail] = useState<string>("");
+  const [confirm_password, setConfirmPassword] = useState<string>("");
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newusername = event.target.value;
+    setUsername(newusername);
   };
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newpassword = event.target.value;
     setPassword(newpassword);
   };
-  const handleLoginClick = async () => {
-    await signIn({ email: email, password: password });
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = event.target.value;
+    setEmail(newEmail);
   };
-  const LogOut = async () => {
-    await signOut();
+  const handleConfirmPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const newconfpassword = event.target.value;
+    setConfirmPassword(newconfpassword);
+  };
+
+  const handleSignupClick = () => {
+    signUp({
+      email: email,
+      password: password,
+      confirmPassword: confirm_password,
+    });
   };
   return (
     <Box
@@ -63,17 +75,31 @@ const Login = () => {
         <TextField
           required
           id="outlined-basic"
+          label="Username"
+          variant="outlined"
+          value={username}
+          onChange={handleUsernameChange}
+        />
+        <TextField
+          required
+          id="outlined-basic"
           label="Password"
           variant="outlined"
           type="password"
           value={password}
           onChange={handlePasswordChange}
         />
-        <Button variant="contained" onClick={handleLoginClick}>
-          Log in
-        </Button>
-        <Button variant="contained" onClick={LogOut}>
-          Log out
+        <TextField
+          required
+          id="outlined-basic"
+          label="Confirm Password"
+          variant="outlined"
+          type="password"
+          value={confirm_password}
+          onChange={handleConfirmPasswordChange}
+        />
+        <Button variant="contained" onClick={handleSignupClick}>
+          Sign Up
         </Button>
       </Box>
     </Box>
