@@ -103,8 +103,6 @@ export default function Home() {
               center={center}
               zoom={14}
             >
-              {/* add random dwarf hook later*/}
-              <Marker position={center} />
               <Marker
                 position={currentLocation}
                 icon={"http://maps.google.com/mapfiles/ms/icons/purple-dot.png"}
