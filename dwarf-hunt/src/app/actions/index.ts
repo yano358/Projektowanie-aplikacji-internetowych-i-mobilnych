@@ -1,6 +1,6 @@
 "use server";
 
-import { signUpSupabaseServerClient } from "../../../config/supabase";
+import { signUpSupabaseServerClient } from "../../../config/signUpClient";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
