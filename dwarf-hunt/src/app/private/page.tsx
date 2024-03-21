@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { Box } from "@mui/material";
-import { signUpSupabaseServerClient } from "../../../config/supabase";
+import { signUpSupabaseServerClient } from "../../../config/signUpClient";
 
 export default async function PrivatePage() {
   const supabase = await signUpSupabaseServerClient();
