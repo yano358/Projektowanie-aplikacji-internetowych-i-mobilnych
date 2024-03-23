@@ -3,7 +3,6 @@ import { Button, Box, TextField } from "@mui/material";
 import { useState } from "react";
 import { signIn, signOut } from "../actions";
 import NavBar from "../../../components/NavBar";
-import SignOut from "../../../components/SignOut";
 import { redirect } from "next/navigation";
 
 const Login = () => {
