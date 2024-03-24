@@ -1,3 +1,4 @@
+"use server";
 import { redirect } from "next/navigation";
 import { Box } from "@mui/material";
 import { signUpSupabaseServerClient } from "../../../config/supabase";

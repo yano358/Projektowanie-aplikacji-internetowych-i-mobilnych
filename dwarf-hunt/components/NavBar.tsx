@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AppBar, Toolbar, Button } from "@mui/material";
 import { styled } from "@mui/system";
 import Link from "next/link";
+import logInOutButton from "./Log-In-or-Out-Button";
 
 const BlackAppBar = styled(AppBar)({
   backgroundColor: "black",
@@ -13,7 +14,7 @@ const BlackAppBar = styled(AppBar)({
   justifyContent: "between",
 });
 
-const WhiteButton = styled(Button)({
+export const WhiteButton = styled(Button)({
   color: "black",
   backgroundColor: "white",
   margin: 7,
@@ -22,7 +23,6 @@ const WhiteButton = styled(Button)({
     color: "white",
   },
 });
-
 const CenteredToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "center",
@@ -44,6 +44,8 @@ const NavBar: React.FC = () => {
         <Link href="/leaderboard" passHref>
           <WhiteButton>Leaderboard</WhiteButton>
         </Link>
+
+        {logInOutButton()}
       </CenteredToolbar>
     </BlackAppBar>
   );
