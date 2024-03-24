@@ -2,6 +2,8 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { supabase } from "../../../config/supabase";
+import { checkSesh } from "../actions/index";
+import { signUpSupabaseServerClient } from "../../../config/signUpClient";
 import NavBar from "../../../components/NavBar";
 import AchievedBox from "../../../components/AchievedBox";
 import TitleStrip from "../../../components/TitleStrip";
@@ -9,29 +11,36 @@ import TitleStrip from "../../../components/TitleStrip";
 const YourAchievementsPage = () => {
   const [achievedAchievements, setAchieved] = useState<any[]>([]);
   const [unachievedAchievements, setUnachieved] = useState<any[]>([]);
-  const [currentUser, setCurrentUser] = useState(null); //TODO aadd getting user's session
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const userAchievements = await fetchUserAchievements();
-      const achievedIds = userAchievements.map(
-        (achievement: any) => achievement.achievement_id
-      );
-      setAchieved(userAchievements);
-      const notAchieved = await fetchNotAchieved(achievedIds);
-      setUnachieved(notAchieved);
+      try {
+        const userAchievements = await fetchUserAchievements();
+        const achievedIds = userAchievements.map(
+          (achievement: any) => achievement.achievement_id
+        );
+        setAchieved(userAchievements);
+        const notAchieved = await fetchNotAchieved(achievedIds);
+        setUnachieved(notAchieved);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchData();
   }, []);
 
   const fetchUserAchievements = async () => {
     try {
+      const currentUserId = (await checkSesh()).user?.id;
       const { data, error } = await supabase
         .from("user_achievements")
         .select(
           "achievement_id, created_at, accounts(user_id , username), achievements(id, name, description)"
         )
-        .eq("user_id", "7df92215-10da-425e-b7ac-f6925ff98ac5"); //TODO aadd getting user's session
+        .eq("user_id", currentUserId);
       if (error) {
         throw error;
       }
@@ -58,6 +67,10 @@ const YourAchievementsPage = () => {
       return [];
     }
   };
+
+  if (isLoading) {
+    return <Typography>Loading Achievements...</Typography>;
+  }
 
   return (
     <Box>
