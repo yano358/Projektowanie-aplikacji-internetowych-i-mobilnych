@@ -2,12 +2,14 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { supabase } from "../../../config/supabase";
-import userGetter from "../private/page";
+import NavBar from "../../../components/NavBar";
+import AchievedBox from "../../../components/AchievedBox";
+import TitleStrip from "../../../components/TitleStrip";
 
 const YourAchievementsPage = () => {
   const [achievedAchievements, setAchieved] = useState<any[]>([]);
   const [unachievedAchievements, setUnachieved] = useState<any[]>([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null); //TODO aadd getting user's session
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,41 +24,14 @@ const YourAchievementsPage = () => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     const userData = await getUserData();
-  //     if (userData !== null && userData.user !== null) {
-  //       console.log("fetched user data", userData);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
-
-  // const getUserData = async () => {
-  //   try {
-  //     const { data, error } = await supabase.auth.getUser();
-  //     const something = userGetter();
-  //     console.log("SOMETHING", something);
-  //     if (error) {
-  //       throw error;
-  //     }
-  //     console.log("to jest userData:", data);
-  //     return data;
-  //   } catch (error) {
-  //     console.error("Error fetching user!!!", error);
-  //     return null;
-  //   }
-  // };
-
   const fetchUserAchievements = async () => {
     try {
       const { data, error } = await supabase
         .from("user_achievements")
         .select(
-          "achievement_id, accounts(user_id , username), achievements(id, name, description)"
+          "achievement_id, created_at, accounts(user_id , username), achievements(id, name, description)"
         )
-        .eq("user_id", "7df92215-10da-425e-b7ac-f6925ff98ac5");
+        .eq("user_id", "7df92215-10da-425e-b7ac-f6925ff98ac5"); //TODO aadd getting user's session
       if (error) {
         throw error;
       }
@@ -86,35 +61,34 @@ const YourAchievementsPage = () => {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
-        Your Achievements:
-      </Typography>
-      <Box>
+      <NavBar />
+      <TitleStrip textData={"Your Achievements:"}></TitleStrip>
+      <Box display="flex" flexWrap="wrap">
         {achievedAchievements.map((achievement, index) => (
-          <Box key={index}>
+          <Box key={index} marginRight={1} marginBottom={1}>
             <Typography variant="body1">
-              Achievement ID: {achievement.achievement_id}, Achievement name:{" "}
-              {achievement.achievements.name}
-              <br />
-              <p>DESCRIPTION: {achievement.achievements.description}</p>
-              <br />
+              <AchievedBox
+                name={achievement.achievements.name}
+                description={achievement.achievements.description}
+                aqusition_date={achievement.created_at}
+                is_achieved={true}
+              ></AchievedBox>
             </Typography>
           </Box>
         ))}
       </Box>
 
-      <Typography variant="h4" gutterBottom>
-        Not Achieved:
-      </Typography>
-      <Box>
+      <TitleStrip textData={"Not Achieved:"}></TitleStrip>
+      <Box display="flex" flexWrap="wrap">
         {unachievedAchievements.map((achievement, index) => (
-          <Box key={index}>
+          <Box key={index} marginRight={1} marginBottom={1}>
             <Typography variant="body1">
-              Achievement ID: {achievement.id}, Achievement name:{" "}
-              {achievement.name}
-              <br />
-              <p>DESCRIPTION: {achievement.description}</p>
-              <br />
+              <AchievedBox
+                name={achievement.name}
+                description={achievement.description}
+                aqusition_date="TBD"
+                is_achieved={false}
+              ></AchievedBox>
             </Typography>
           </Box>
         ))}
