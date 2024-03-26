@@ -25,7 +25,9 @@ export async function middleware(request: NextRequest, response: NextResponse) {
       (request.nextUrl.pathname === "/private" ||
         request.nextUrl.pathname === "/" ||
         request.nextUrl.pathname === slug.toString() ||
-        request.nextUrl.pathname === "/achievents")
+        request.nextUrl.pathname === "/achievements" ||
+        request.nextUrl.pathname === "/manageaccount" ||
+        request.nextUrl.pathname === "/leaderboard")
     ) {
       const redirectUrl = new URL("/login", request.nextUrl.origin);
       return NextResponse.redirect(redirectUrl);
