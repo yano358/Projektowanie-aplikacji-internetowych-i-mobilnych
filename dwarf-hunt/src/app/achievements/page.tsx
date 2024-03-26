@@ -34,7 +34,8 @@ const YourAchievementsPage = () => {
 
   const fetchUserAchievements = async () => {
     try {
-      const currentUserId = (await checkSesh()).user?.id;
+      const user = await checkSesh();
+      const currentUserId = user?.user.id;
       const { data, error } = await supabase
         .from("user_achievements")
         .select(
