@@ -1,5 +1,5 @@
 "use client";
-import { Box, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { supabase } from "../../../config/supabase";
 import { checkSesh } from "../actions/index";
@@ -11,22 +11,23 @@ import RankingTile from "../../../components/RankingTile";
 const LeaderboardPage = () => {
   const [scores, setScores] = useState<any[]>([]);
   const [yourPos, setYourPos] = useState<any>("");
+  const [loadedRecords, setLoadedRecords] = useState<number>(0);
 
   useEffect(() => {
     const fetchScoresData = async () => {
-      const usersScores = await fetschScore();
+      const usersScores = await fetchScore();
       setScores(usersScores);
     };
     fetchScoresData();
-  }, []);
+  }, [loadedRecords]);
 
-  const fetschScore = async () => {
+  const fetchScore = async () => {
     try {
       const currentUserId = (await checkSesh()).user?.id;
       const { data, error } = await supabase
         .from("timered_leaderboard")
         .select("username, score, place")
-        .range(0, 19);
+        .range(0, 9 + loadedRecords);
       if (error) {
         throw error;
       }
@@ -39,7 +40,6 @@ const LeaderboardPage = () => {
 
       if (posData && posData.data && posData.data.place !== undefined) {
         const place = posData.data.place;
-        console.log("eee" + place);
         setYourPos("YOUR POSITION: " + place);
       } else {
         console.error("Position data or 'place' field not found!");
@@ -49,6 +49,10 @@ const LeaderboardPage = () => {
       console.error("Error fetching user scores:", error);
       return [];
     }
+  };
+
+  const handleLoadMore = () => {
+    setLoadedRecords((prev) => prev + 10);
   };
 
   return (
@@ -65,6 +69,19 @@ const LeaderboardPage = () => {
             score={score.score}
           />
         ))}
+        <Button
+          onClick={handleLoadMore}
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "center",
+            backgroundColor: "black",
+            color: "white",
+            ":hover": { backgroundColor: "#34303b" },
+          }}
+        >
+          Load more
+        </Button>
       </Ranking>
       <TitleStrip textData={yourPos}></TitleStrip>
     </Box>
