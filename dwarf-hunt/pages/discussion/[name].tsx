@@ -6,6 +6,7 @@ import { GoogleMap, Circle, useLoadScript } from "@react-google-maps/api";
 import { Box, Typography } from "@mui/material";
 
 import NavBar from "../../components/NavBar";
+import AddComentButton from "../../components/AddComentButton";
 import {
   CommentComponent,
   CommentReply,
@@ -44,7 +45,7 @@ export default function Discussion() {
       try {
         const { data, error } = await supabase
           .from("comments")
-          .select("dwarf_id, content, user_id, parent_id")
+          .select("dwarf_id, content, accounts(user_id , username), parent_id")
           .eq("dwarf_id", dwarfData?.id);
         if (error) {
           console.error("Error fetching comments:", error);
@@ -173,19 +174,20 @@ export default function Discussion() {
         <div>Loading...</div>
       )}
       {!dwarfData && name ? <div>404 - Dwarf not found</div> : null}
-      <Box>
+      <Box sx={{ maxHeight: "250px", overflow: "auto" }}>
+        <AddComentButton />
         {comments.map((comment) => {
           return (
             <CommentComponent
               key={comment.id}
-              author={comment.user_id}
+              author={comment.accounts.username}
               comment={comment.content}
             >
               {replies.map((reply, index) => {
                 return (
                   <CommentReply
                     key={index}
-                    author={reply.user_id}
+                    author={reply.accounts.username}
                     comment={reply.content}
                     cutIn={1}
                     // index <= 3 ? index + 1 : 4}
