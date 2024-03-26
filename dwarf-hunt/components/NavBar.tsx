@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { AppBar, Toolbar, Button } from "@mui/material";
 import { styled } from "@mui/system";
 import Link from "next/link";

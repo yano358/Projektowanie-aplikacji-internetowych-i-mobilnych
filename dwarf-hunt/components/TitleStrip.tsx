@@ -13,10 +13,10 @@ const BlackAppBar = styled(AppBar)({
 });
 
 interface TitleText {
-  textData: string;
+  children?: React.ReactNode;
 }
 
-const TitleStrip: React.FC<TitleText> = ({ textData }) => {
-  return <BlackAppBar>{textData}</BlackAppBar>;
+const TitleStrip: React.FC<TitleText> = ({ children }) => {
+  return <BlackAppBar>{children}</BlackAppBar>;
 };
 export default TitleStrip;

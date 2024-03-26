@@ -6,15 +6,12 @@ const AddComentButton = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleOpen = async () => {
-    // const res = await module;
-    // if (!res) {
-    //   window.location.href = "/login";
-    // }
     setDialogOpen(true);
   };
 
   const handleClose = () => {
     setDialogOpen(false);
+    return "";
   };
 
   return (

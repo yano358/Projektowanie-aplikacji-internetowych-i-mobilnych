@@ -91,57 +91,47 @@ export default function Discussion() {
   });
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%",
-        flex: 1,
-        width: "100%",
-      }}
-    >
+    <>
       <NavBar />
-      <Typography
+      <Box
         sx={{
-          fontSize: 24,
-          fontWeight: "bold",
-          marginTop: 2,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+          flex: 1,
+          width: "100%",
         }}
       >
-        {name}
-      </Typography>
-      {dwarfData ? (
-        <div>
-          {!isLoaded ? (
-            <h1>Loading . . .</h1>
-          ) : (
-            <Box
-              sx={{
-                width: "full",
-                height: "400px",
-                display: "flex",
-                justifyContent: "center",
-                paddingTop: "15px",
-              }}
-            >
-              <GoogleMap
-                mapContainerStyle={{
-                  width: "600px",
+        <Typography
+          sx={{
+            fontSize: 24,
+            fontWeight: "bold",
+            marginTop: 2,
+          }}
+        >
+          {name}
+        </Typography>
+        {dwarfData ? (
+          <div>
+            {!isLoaded ? (
+              <h1>Loading . . .</h1>
+            ) : (
+              <Box
+                sx={{
+                  width: "full",
                   height: "400px",
+                  display: "flex",
+                  justifyContent: "center",
+                  paddingTop: "15px",
                 }}
-                center={
-                  dwarfData.latitude && dwarfData.longitude
-                    ? {
-                        lat: dwarfData.latitude,
-                        lng: dwarfData.longitude,
-                      }
-                    : { lat: 51.112207, lng: 17.039258 }
-                }
-                zoom={14}
               >
-                <Circle
+                <GoogleMap
+                  mapContainerStyle={{
+                    width: "600px",
+                    height: "400px",
+                  }}
                   center={
                     dwarfData.latitude && dwarfData.longitude
                       ? {
@@ -150,54 +140,66 @@ export default function Discussion() {
                         }
                       : { lat: 51.112207, lng: 17.039258 }
                   }
-                  radius={100}
-                  options={{
-                    strokeWeight: 2,
-                    fillColor: "#FA80ED",
-                    fillOpacity: 0.35,
-                  }}
-                />
-              </GoogleMap>
-            </Box>
-          )}
-          <Typography
-            sx={{
-              fontSize: 18,
-              marginTop: 2,
-            }}
-          >
-            {dwarfData.description}
-          </Typography>
-          {/* <div>ID: {dwarfData.id}</div> */}
-        </div>
-      ) : (
-        <div>Loading...</div>
-      )}
-      {!dwarfData && name ? <div>404 - Dwarf not found</div> : null}
-      <Box sx={{ maxHeight: "250px", overflow: "auto" }}>
-        <AddComentButton />
-        {comments.map((comment) => {
-          return (
-            <CommentComponent
-              key={comment.id}
-              author={comment.accounts.username}
-              comment={comment.content}
-            >
-              {replies.map((reply, index) => {
-                return (
-                  <CommentReply
-                    key={index}
-                    author={reply.accounts.username}
-                    comment={reply.content}
-                    cutIn={1}
-                    // index <= 3 ? index + 1 : 4}
+                  zoom={14}
+                >
+                  <Circle
+                    center={
+                      dwarfData.latitude && dwarfData.longitude
+                        ? {
+                            lat: dwarfData.latitude,
+                            lng: dwarfData.longitude,
+                          }
+                        : { lat: 51.112207, lng: 17.039258 }
+                    }
+                    radius={100}
+                    options={{
+                      strokeWeight: 2,
+                      fillColor: "#FA80ED",
+                      fillOpacity: 0.35,
+                    }}
                   />
-                );
-              })}
-            </CommentComponent>
-          );
-        })}
+                </GoogleMap>
+              </Box>
+            )}
+            <Typography
+              sx={{
+                fontSize: 18,
+                marginTop: 2,
+              }}
+            >
+              {dwarfData.description}
+            </Typography>
+            {/* <div>ID: {dwarfData.id}</div> */}
+          </div>
+        ) : (
+          <div>Loading...</div>
+        )}
+        {!dwarfData && name ? <div>404 - Dwarf not found</div> : null}
+        <Box sx={{ maxHeight: "250px", overflow: "auto" }}>
+          <AddComentButton />
+          {comments.map((comment) => {
+            return (
+              <CommentComponent
+                key={comment.id}
+                author={comment.accounts.username}
+                comment={comment.content}
+              >
+                {replies.map((reply, index) => {
+                  return (
+                    <CommentReply
+                      key={index}
+                      author={reply.accounts.username}
+                      comment={reply.content}
+                      cutIn={1}
+                      // index <= 3 ? index + 1 : 4}
+                    />
+                  );
+                })}
+              </CommentComponent>
+            );
+          })}
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }

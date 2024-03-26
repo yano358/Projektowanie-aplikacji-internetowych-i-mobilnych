@@ -1,3 +1,4 @@
+"use client";
 import {
   Dialog,
   DialogTitle,
@@ -6,10 +7,11 @@ import {
   Button,
   TextField,
 } from "@mui/material";
+import { useState } from "react";
 
 interface AddCommentDialogProps {
   open: boolean;
-  onClose: () => void;
+  onClose: () => string;
 }
 
 const AddCommentDialog: React.FC<AddCommentDialogProps> = ({
@@ -17,8 +19,10 @@ const AddCommentDialog: React.FC<AddCommentDialogProps> = ({
   onClose,
 }) => {
   const handleAddComment = async () => {
-    onClose();
+    setComment(onClose());
   };
+
+  const [comment, setComment] = useState("");
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -30,11 +34,24 @@ const AddCommentDialog: React.FC<AddCommentDialogProps> = ({
           fullWidth
           variant="outlined"
           label="Comment"
+          value={comment}
+          onChange={(e) => {
+            setComment(e.target.value);
+          }}
         />
       </DialogContent>
       <DialogActions>
         <Button variant="outlined" color="primary" onClick={handleAddComment}>
           Add Comment
+        </Button>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => {
+            setComment(onClose);
+          }}
+        >
+          Cancel
         </Button>
       </DialogActions>
     </Dialog>
