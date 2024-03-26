@@ -5,13 +5,10 @@ import updateSession from "./config/signUpClient";
 export async function middleware(request: NextRequest, response: NextResponse) {
   await updateSession(request);
   const data = await checkSesh();
-  console.log(data);
   const { pathname } = request.nextUrl;
 
   const name = pathname.substring(12);
   const slug = `/discussion/${name}`;
-  console.log(slug);
-  console.log(request.nextUrl.pathname);
   if (
     data &&
     (request.nextUrl.pathname === "/login" ||
