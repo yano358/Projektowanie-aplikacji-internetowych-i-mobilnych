@@ -4,6 +4,11 @@ import { signUpSupabaseServerClient } from "../../../config/signUpClient";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+export async function checkSesh() {
+  const supabase = await signUpSupabaseServerClient();
+  const { data, error } = await supabase.auth.getUser();
+  return data.user ? data : null;
+}
 export async function signUp(data: {
   email: string;
   password: string;
