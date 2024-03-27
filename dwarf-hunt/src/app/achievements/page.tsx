@@ -3,6 +3,8 @@ import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { supabase } from "../../../config/supabase";
 import { checkSesh } from "../actions/index";
+import { signUpSupabaseServerClient } from "../../../config/signUpClient";
+
 import NavBar from "../../../components/NavBar";
 import AchievedBox from "../../../components/AchievedBox";
 import TitleStrip from "../../../components/TitleStrip";
@@ -33,8 +35,8 @@ const YourAchievementsPage = () => {
 
   const fetchUserAchievements = async () => {
     try {
-      const user = await checkSesh();
-      const currentUserId = user?.user.id;
+      const currentUserId = (await checkSesh()).user?.id;
+
       const { data, error } = await supabase
         .from("user_achievements")
         .select(
@@ -96,6 +98,7 @@ const YourAchievementsPage = () => {
       </Box>
 
       <TitleStrip>Not Achieved:</TitleStrip>
+
       <Box display="flex" flexWrap="wrap">
         {unachievedAchievements.map((achievement, index) => (
           <Box key={index} marginRight={1} marginBottom={1}>
@@ -103,7 +106,10 @@ const YourAchievementsPage = () => {
               <AchievedBox
                 name={achievement.name}
                 description={achievement.description}
+
+
                 aqusition_date=""
+
                 is_achieved={false}
               ></AchievedBox>
             </Typography>
