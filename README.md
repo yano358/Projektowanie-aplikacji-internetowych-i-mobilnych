@@ -11,6 +11,15 @@ Application for finding Wroclaw's dwarves
 - **TypeScript**:
 - **Material UI**:
 
+## Our QOL Tool recommendations for Visual Studio Code:
+- **ES7 React/Redux/GraphQL/React-Native snippets**
+- **ESLint**
+- **Prettier - Code formatter**
+- **Pretty TypeScript Errors**
+- **Tailwind CSS IntelliSense**
+- **Gruvbox Theme**
+- **JetBrains Mono font**
+
 ## Requirements for running locally:
 1. *Nodejs*
 2. *Supabase schema* (our schema TBA to this repo)
