@@ -3,7 +3,6 @@ import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { supabase } from "../../../config/supabase";
 import { checkSesh } from "../actions/index";
-import { signUpSupabaseServerClient } from "../../../config/signUpClient";
 
 import NavBar from "../../../components/NavBar";
 import AchievedBox from "../../../components/AchievedBox";
@@ -35,7 +34,8 @@ const YourAchievementsPage = () => {
 
   const fetchUserAchievements = async () => {
     try {
-      const currentUserId = (await checkSesh()).user?.id;
+      const User = await checkSesh();
+      const currentUserId = User?.user.id;
 
       const { data, error } = await supabase
         .from("user_achievements")
@@ -106,10 +106,7 @@ const YourAchievementsPage = () => {
               <AchievedBox
                 name={achievement.name}
                 description={achievement.description}
-
-
                 aqusition_date=""
-
                 is_achieved={false}
               ></AchievedBox>
             </Typography>

@@ -1,11 +1,8 @@
-
 import React, { useEffect, useState } from "react";
 import { Card, Toolbar, Button } from "@mui/material";
 import { styled } from "@mui/system";
 import Link from "next/link";
-import { styled } from "@mui/system";
 import { FC } from "react";
-
 
 interface AchievementData {
   name: string;
@@ -68,16 +65,13 @@ const DateTile = styled(Card)({
   padding: "5px 10px",
 });
 
-
 const AchievedBox: FC<AchievementData> = ({
-
   name,
   description,
   aqusition_date,
   is_achieved,
 }) => {
   const dateA = aqusition_date ? aqusition_date.slice(0, 10) : "";
-
 
   return (
     <BlackCard isAchieved={is_achieved}>
