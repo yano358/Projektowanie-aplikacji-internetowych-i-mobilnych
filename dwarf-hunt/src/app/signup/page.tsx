@@ -1,9 +1,8 @@
 "use client";
 import { Button, Box, TextField } from "@mui/material";
 import { useState } from "react";
-
-import NavBar from "../../../components/NavBar";
 import { signUp } from "../actions/index";
+
 const Login = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -48,7 +47,6 @@ const Login = () => {
         flexDirection: "column",
       }}
     >
-      <NavBar />
       <Box
         sx={{
           display: "flex",
