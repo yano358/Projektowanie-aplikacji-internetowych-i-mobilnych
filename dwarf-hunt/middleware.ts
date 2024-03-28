@@ -28,7 +28,6 @@ export async function middleware(request: NextRequest, response: NextResponse) {
       .from("accounts")
       .insert([{ user_id: data.user.id, username: data.user.email }]);
   }
-
   if (
     data &&
     (request.nextUrl.pathname === "/login" ||

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Card, Toolbar, Button } from "@mui/material";
 import { styled } from "@mui/system";
 import Link from "next/link";
+import { FC } from "react";
 
 interface AchievementData {
   name: string;
   description: string;
-  aqusition_date: string;
+
+  aqusition_date?: string;
   is_achieved: boolean;
 }
 
@@ -63,19 +65,19 @@ const DateTile = styled(Card)({
   padding: "5px 10px",
 });
 
-const AchievedBox: React.FC<AchievementData> = ({
+const AchievedBox: FC<AchievementData> = ({
   name,
   description,
   aqusition_date,
   is_achieved,
 }) => {
-  const formattedDate = aqusition_date.slice(0, 10);
+  const dateA = aqusition_date ? aqusition_date.slice(0, 10) : "";
 
   return (
     <BlackCard isAchieved={is_achieved}>
       <NameTile>{name}</NameTile>
       <DescriptionTile>{description}</DescriptionTile>
-      <DateTile>{"obtained at: " + formattedDate}</DateTile>
+      <DateTile>{dateA}</DateTile>
     </BlackCard>
   );
 };

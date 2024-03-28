@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { supabase } from "../../../config/supabase";
 import { checkSesh } from "../actions/index";
-import { signUpSupabaseServerClient } from "../../../config/signUpClient";
+
 import NavBar from "../../../components/NavBar";
 import AchievedBox from "../../../components/AchievedBox";
 import TitleStrip from "../../../components/TitleStrip";
@@ -34,8 +34,9 @@ const YourAchievementsPage = () => {
 
   const fetchUserAchievements = async () => {
     try {
-      const user = await checkSesh();
-      const currentUserId = user?.user.id;
+      const User = await checkSesh();
+      const currentUserId = User?.user.id;
+
       const { data, error } = await supabase
         .from("user_achievements")
         .select(
@@ -76,23 +77,28 @@ const YourAchievementsPage = () => {
   return (
     <Box>
       <NavBar />
-      <TitleStrip textData={"Your Achievements:"}></TitleStrip>
-      <Box display="flex" flexWrap="wrap">
+      <TitleStrip>Your Achievements</TitleStrip>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "between",
+          flexDirection: { md: "row", sm: "column" },
+        }}
+      >
         {achievedAchievements.map((achievement, index) => (
-          <Box key={index} marginRight={1} marginBottom={1}>
-            <Typography variant="body1">
-              <AchievedBox
-                name={achievement.achievements.name}
-                description={achievement.achievements.description}
-                aqusition_date={achievement.created_at}
-                is_achieved={true}
-              ></AchievedBox>
-            </Typography>
-          </Box>
+          <Typography variant="body1" key={index}>
+            <AchievedBox
+              name={achievement.achievements.name}
+              description={achievement.achievements.description}
+              aqusition_date={achievement.created_at}
+              is_achieved={true}
+            />
+          </Typography>
         ))}
       </Box>
 
-      <TitleStrip textData={"Not Achieved:"}></TitleStrip>
+      <TitleStrip>Not Achieved:</TitleStrip>
+
       <Box display="flex" flexWrap="wrap">
         {unachievedAchievements.map((achievement, index) => (
           <Box key={index} marginRight={1} marginBottom={1}>
@@ -100,7 +106,7 @@ const YourAchievementsPage = () => {
               <AchievedBox
                 name={achievement.name}
                 description={achievement.description}
-                aqusition_date="TBD"
+                aqusition_date=""
                 is_achieved={false}
               ></AchievedBox>
             </Typography>
