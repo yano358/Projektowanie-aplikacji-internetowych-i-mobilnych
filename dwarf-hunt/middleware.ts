@@ -1,17 +1,34 @@
 import { checkSesh } from "@/app/actions";
 import { NextResponse, type NextRequest } from "next/server";
 import updateSession from "./config/signUpClient";
+import { supabase } from "./config/supabase";
+
+async function checkAccount() {
+  const data = await checkSesh();
+  if (data) {
+    const accounts = await supabase
+      .from("accounts")
+      .select("*")
+      .eq("user_id", data.user.id);
+    if (accounts.data?.length === 0) {
+      return true;
+    } else return false;
+    return false;
+  }
+}
 
 export async function middleware(request: NextRequest, response: NextResponse) {
   await updateSession(request);
   const data = await checkSesh();
-  console.log(data);
   const { pathname } = request.nextUrl;
-
   const name = pathname.substring(12);
   const slug = `/discussion/${name}`;
-  console.log(slug);
-  console.log(request.nextUrl.pathname);
+  if (data && (await checkAccount())) {
+    const { error } = await supabase
+      .from("accounts")
+      .insert([{ user_id: data.user.id, username: data.user.email }]);
+  }
+
   if (
     data &&
     (request.nextUrl.pathname === "/login" ||

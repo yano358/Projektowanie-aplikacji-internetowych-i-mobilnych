@@ -2,8 +2,6 @@
 import { Button, Box, TextField } from "@mui/material";
 import { useState } from "react";
 import { signIn, signOut } from "../actions";
-import NavBar from "../../../components/NavBar";
-import { redirect } from "next/navigation";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -35,7 +33,6 @@ const Login = () => {
         flexDirection: "column",
       }}
     >
-      <NavBar />
       <Box
         sx={{
           display: "flex",
@@ -71,8 +68,21 @@ const Login = () => {
         <Button variant="contained" onClick={handleLoginClick}>
           Log in
         </Button>
-        <Button variant="contained" onClick={LogOut}>
-          Log out
+        <Box
+          sx={{
+            display: "flex",
+            padding: "5px",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "white",
+            border: "2px solid red",
+            borderRadius: "8px",
+          }}
+        >
+          Don't have an account yet?
+        </Box>
+        <Button variant="contained" href="/signup">
+          Sign up
         </Button>
       </Box>
     </Box>
