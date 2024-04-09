@@ -4,14 +4,9 @@ import { useState } from "react";
 import { signUp } from "../actions/index";
 
 const Login = () => {
-  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [confirm_password, setConfirmPassword] = useState<string>("");
-  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newusername = event.target.value;
-    setUsername(newusername);
-  };
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newpassword = event.target.value;
     setPassword(newpassword);
@@ -40,7 +35,7 @@ const Login = () => {
         display: "flex",
         width: "100%",
         height: "100%",
-        position: "absolute",
+        position: "relative",
         top: 0,
         left: 0,
         alignItems: "center",
@@ -69,14 +64,6 @@ const Login = () => {
           variant="outlined"
           value={email}
           onChange={handleEmailChange}
-        />
-        <TextField
-          required
-          id="outlined-basic"
-          label="Username"
-          variant="outlined"
-          value={username}
-          onChange={handleUsernameChange}
         />
         <TextField
           required

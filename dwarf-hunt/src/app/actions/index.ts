@@ -55,6 +55,28 @@ export async function signIn(data: { email: string; password: string }) {
   redirect("/");
 }
 
+export async function changeEmail(data: { email: string }) {
+  const supabase = await signUpSupabaseServerClient();
+  const { error } = await supabase.auth.updateUser({
+    email: data.email,
+  });
+  if (error) {
+    redirect("/error");
+  }
+}
+export async function changeUsername(data: { username: string }) {
+  const supabase = await signUpSupabaseServerClient();
+  const userData = await checkSesh();
+  const { error } = await supabase
+    .from("accounts")
+    .update({
+      username: data.username,
+    })
+    .eq("user_id", userData?.user.id);
+  if (error) {
+    redirect("/error");
+  }
+}
 // export async function onSubmitSignIn(data: {
 //   email: string;
 //   password: string;

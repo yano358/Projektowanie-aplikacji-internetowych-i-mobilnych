@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, Button } from "@mui/material";
 import { styled } from "@mui/system";
 import Link from "next/link";
+// import { signOut } from "@/app/actions";
 
 const BlackAppBar = styled(AppBar)({
   backgroundColor: "black",
@@ -28,6 +29,10 @@ const CenteredToolbar = styled(Toolbar)({
   alignItems: "center",
 });
 
+// const logOutAction = async () => {
+//   await signOut();
+// };
+
 const NavBar: React.FC = () => {
   return (
     <BlackAppBar>
@@ -43,6 +48,8 @@ const NavBar: React.FC = () => {
         <Link href="/leaderboard" passHref>
           <WhiteButton>Leaderboard</WhiteButton>
         </Link>
+
+        {/* <WhiteButton onClick={logOutAction}>Log out</WhiteButton> */}
       </CenteredToolbar>
     </BlackAppBar>
   );
