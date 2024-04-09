@@ -13,8 +13,8 @@ async function checkAccount() {
     if (accounts.data?.length === 0) {
       return true;
     } else return false;
-    return false;
   }
+  return false;
 }
 
 export async function middleware(request: NextRequest, response: NextResponse) {
