@@ -1,7 +1,7 @@
 "use client";
 import { Button, Box, TextField } from "@mui/material";
 import { useState } from "react";
-import { signIn, signOut } from "../actions";
+import { signIn } from "../actions";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -16,9 +16,6 @@ const Login = () => {
   };
   const handleLoginClick = async () => {
     await signIn({ email: email, password: password });
-  };
-  const LogOut = async () => {
-    await signOut();
   };
   return (
     <Box
