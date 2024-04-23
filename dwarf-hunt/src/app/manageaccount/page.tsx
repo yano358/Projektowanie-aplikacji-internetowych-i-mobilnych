@@ -5,7 +5,7 @@ import { use, useEffect, useState } from "react";
 import { changeEmail, checkSesh, changeUsername } from "../actions";
 import { supabase } from "../../../config/supabase";
 import { TextField, Button } from "@mui/material";
-
+import { signOut } from "../actions";
 const ManageAccount = () => {
   const [userData, setUserData] = useState<any | undefined>(undefined);
   const [accountData, setAccountData] = useState<any | undefined>([]);
@@ -76,6 +76,9 @@ const ManageAccount = () => {
       }
     }
   };
+  const logOutAction = async () => {
+    await signOut();
+  };
   return (
     <>
       <NavBar />
@@ -91,6 +94,9 @@ const ManageAccount = () => {
           flexDirection: "column",
         }}
       >
+        <Button variant="contained" onClick={logOutAction}>
+          Log Out
+        </Button>
         <Box
           sx={{
             padding: "25px",

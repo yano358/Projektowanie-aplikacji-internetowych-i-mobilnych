@@ -1,5 +1,5 @@
 "use client";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { supabase } from "../../../config/supabase";
 import { checkSesh } from "../actions/index";
@@ -7,7 +7,7 @@ import { checkSesh } from "../actions/index";
 import NavBar from "../../../components/NavBar";
 import AchievedBox from "../../../components/AchievedBox";
 import TitleStrip from "../../../components/TitleStrip";
-
+import { signOut } from "../actions/index";
 const YourAchievementsPage = () => {
   const [achievedAchievements, setAchieved] = useState<any[]>([]);
   const [unachievedAchievements, setUnachieved] = useState<any[]>([]);
@@ -73,10 +73,15 @@ const YourAchievementsPage = () => {
   if (isLoading) {
     return <Typography>Loading Achievements...</Typography>;
   }
-
+  const logOutAction = async () => {
+    await signOut();
+  };
   return (
     <Box>
       <NavBar />
+      <Button variant="contained" onClick={logOutAction}>
+        Log Out
+      </Button>
       <TitleStrip>Your Achievements</TitleStrip>
       <Box
         sx={{

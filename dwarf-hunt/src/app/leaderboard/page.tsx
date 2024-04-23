@@ -7,6 +7,7 @@ import TitleStrip from "../../../components/TitleStrip";
 import Navbar from "../../../components/NavBar";
 import Ranking from "../../../components/Ranking";
 import RankingTile from "../../../components/RankingTile";
+import { signOut } from "../actions/index";
 
 const LeaderboardPage = () => {
   const [scores, setScores] = useState<any[] | undefined>([]);
@@ -59,9 +60,15 @@ const LeaderboardPage = () => {
     setLoadedRecords((prev) => prev + 10);
   };
 
+  const logOutAction = async () => {
+    await signOut();
+  };
   return (
     <Box>
-      <Navbar></Navbar>
+      <Navbar />
+      <Button variant="contained" onClick={logOutAction}>
+        Log out
+      </Button>
       <TitleStrip>LEADERBOARD</TitleStrip>
 
       <Ranking>
