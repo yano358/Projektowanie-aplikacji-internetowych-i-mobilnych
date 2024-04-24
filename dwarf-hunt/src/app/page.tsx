@@ -3,14 +3,24 @@ import { Box } from "@mui/material";
 import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
+import { checkSesh } from "../app/actions/index";
 
 import { supabase } from "../../config/supabase";
 
 import NavBar from "../../components/NavBar";
 import DwarfCardComponent from "../../components/DwarfCardComponent";
+import { updateAchievements } from "../../functions/updateAchievements";
+
+let myFlag = true;
 
 export default function Home() {
   const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
+  let loadAchievs = true;
+
+  if (myFlag) {
+    myFlag = false;
+    updateAchievements();
+  }
 
   useEffect(() => {
     const fetchDwarvesData = async () => {
