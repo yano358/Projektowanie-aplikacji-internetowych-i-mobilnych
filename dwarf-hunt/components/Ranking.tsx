@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import { Box, Card } from "@mui/material";
 import { styled } from "@mui/system";
-import RankingTile from "../components/RankingTile";
 
 const RankingBoxWrapper = styled(Box)({
   backgroundColor: "gray",
