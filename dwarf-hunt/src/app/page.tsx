@@ -3,15 +3,21 @@ import { Box, Button } from "@mui/material";
 import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
-
+import { updateAchievements } from "../../functions/updateAchievements";
 import { supabase } from "../../config/supabase";
-
 import NavBar from "../../components/NavBar";
 import DwarfCardComponent from "../../components/DwarfCardComponent";
 import { signOut } from "./actions/index";
 
+let checkedForAchievements = false;
+
 export default function Home() {
   const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
+
+  if (!checkedForAchievements) {
+    checkedForAchievements = true;
+    updateAchievements();
+  }
 
   useEffect(() => {
     const fetchDwarvesData = async () => {
