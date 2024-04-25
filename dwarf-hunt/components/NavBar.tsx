@@ -50,6 +50,10 @@ const NavBar: React.FC = () => {
           <WhiteButton>Leaderboard</WhiteButton>
         </Link>
 
+        <Link href="/" passHref>
+          <WhiteButton>Main Page</WhiteButton>
+        </Link>
+
         {/* <WhiteButton onClick={logOutAction}>Log out</WhiteButton> */}
       </CenteredToolbar>
     </BlackAppBar>

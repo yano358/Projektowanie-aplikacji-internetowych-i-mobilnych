@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../config/supabase";
 import { checkSesh } from "@/app/actions";
 
-export async function updateAchievements(user_uuid: string) {
+export async function updateAchievements() {
   let accountTime = <number>0;
   let commentsAmount = <number>0;
   let interactionsAmount = <number>0;

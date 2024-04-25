@@ -1,7 +1,7 @@
 "use client";
 import { Box } from "@mui/system";
 import NavBar from "../../../components/NavBar";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { changeEmail, checkSesh, changeUsername } from "../actions";
 import { supabase } from "../../../config/supabase";
 import { TextField, Button } from "@mui/material";
@@ -131,6 +131,7 @@ const ManageAccount = () => {
             <TextField
               label="New Email - leave empty to keep the same email"
               defaultValue={"New Email"}
+              type={"email"}
               value={newEmail}
               onChange={handleNewEmailChange}
             ></TextField>
