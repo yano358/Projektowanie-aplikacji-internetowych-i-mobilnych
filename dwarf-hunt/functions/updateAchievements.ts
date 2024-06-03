@@ -11,10 +11,9 @@ export async function updateAchievements() {
   let achievedAchievements: number[] = [];
   const currentUser = await checkSesh();
   if (!currentUser) {
-    console.log("nie udalo sie");
+    console.error("failed top get current user");
     return;
   }
-  console.log("mamy go!", currentUser);
   const currentUserId = currentUser.user.id;
 
   async function fetchAccountTime() {
@@ -25,7 +24,7 @@ export async function updateAchievements() {
       .single();
 
     if (error) {
-      console.log(error);
+      console.error(error);
     }
     if (data) {
       accountTime = data.hours_since_creation;
@@ -40,7 +39,7 @@ export async function updateAchievements() {
       .single();
 
     if (error) {
-      console.log(error);
+      console.error(error);
     }
     if (data) {
       commentsAmount = data.comments_amount;
@@ -55,7 +54,7 @@ export async function updateAchievements() {
       .single();
 
     if (error) {
-      console.log(error);
+      console.error(error);
     }
     if (data) {
       interactionsAmount = data.interactions_amount;
@@ -70,7 +69,7 @@ export async function updateAchievements() {
       .single();
 
     if (error) {
-      console.log(error);
+      console.error(error);
     }
     if (data) {
       visitsAmount = data.visited_location_count;
@@ -85,7 +84,7 @@ export async function updateAchievements() {
       .single();
 
     if (error) {
-      console.log(error);
+      console.error(error);
     }
     if (data) {
       rankingPlace = data.place;
@@ -98,7 +97,7 @@ export async function updateAchievements() {
       .select("achievement_id")
       .eq("user_id", currentUserId);
     if (error) {
-      console.log(error);
+      console.error(error);
     }
     if (data) {
       achievedAchievements = data.map(
@@ -108,7 +107,6 @@ export async function updateAchievements() {
   }
 
   async function addAchievement(achievementId: Number) {
-    console.log("probuje dodac ", achievementId, " do ", currentUserId);
     const { error } = await supabase
       .from("user_achievements")
       .insert({ achievement_id: achievementId, user_id: currentUserId });
@@ -117,7 +115,6 @@ export async function updateAchievements() {
       console.error("cos... cos sie zepsulo");
       throw error;
     }
-    console.log("Dodano nowe osiągnięcie:", achievementId);
   }
 
   async function printAll() {

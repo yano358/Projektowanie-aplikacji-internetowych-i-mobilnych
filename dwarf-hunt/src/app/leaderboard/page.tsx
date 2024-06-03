@@ -36,7 +36,6 @@ const LeaderboardPage = () => {
       if (error) {
         throw error;
       }
-      console.log("idd?" + currentUserId);
       const posData = await supabase
         .from("timered_leaderboard")
         .select("place")

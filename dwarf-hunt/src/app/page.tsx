@@ -8,11 +8,14 @@ import { supabase } from "../../config/supabase";
 import NavBar from "../../components/NavBar";
 import DwarfCardComponent from "../../components/DwarfCardComponent";
 import { signOut } from "./actions/index";
+import AddComentButton from "../../components/AddComentButton";
+import { checkSesh } from "./actions/index";
 
 let checkedForAchievements = false;
 
 export default function Home() {
   const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
+  const [uuid, setUuid] = useState("");
 
   if (!checkedForAchievements) {
     checkedForAchievements = true;
@@ -22,8 +25,12 @@ export default function Home() {
   useEffect(() => {
     const fetchDwarvesData = async () => {
       const data = await fetchDwarves();
+      const user = await checkSesh();
       if (data) {
         setDwarves(data);
+      }
+      if (user) {
+        setUuid(user.user.id);
       }
     };
     fetchDwarvesData();
@@ -43,7 +50,7 @@ export default function Home() {
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
-  }, []); // empty array means it only runs once, adding currentLocation would make it run every time currentLocation changes
+  }, []);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
@@ -56,11 +63,10 @@ export default function Home() {
     try {
       const { data, error } = await supabase
         .from("dwarves")
-        .select("name, description");
+        .select("name, description, id");
       if (error) {
         throw error;
       }
-      console.log(data);
       return data;
     } catch (error) {
       console.error("Error fetching dwarves:", error);
@@ -137,6 +143,16 @@ export default function Home() {
                     description={dwarf.description}
                   />
                 </Link>
+                <Box
+                  sx={{
+                    position: "relative",
+                    display: "flex",
+                    justifyContent: "right",
+                    paddingRight: "20%",
+                  }}
+                >
+                  <AddComentButton uuid={uuid} dwarfId={dwarf.id} />
+                </Box>
               </div>
             ))}
           </Box>

@@ -1,8 +1,13 @@
 import { Button, Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AddCommentDialog from "./AddCommentDialog";
 
-const AddComentButton = () => {
+interface AddCommentButtonProps {
+  uuid: string;
+  dwarfId: number;
+}
+
+const AddComentButton = ({ uuid, dwarfId }: AddCommentButtonProps) => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleOpen = async () => {
@@ -38,7 +43,12 @@ const AddComentButton = () => {
       >
         Comment
       </Button>
-      <AddCommentDialog open={dialogOpen} onClose={handleClose} />
+      <AddCommentDialog
+        open={dialogOpen}
+        onClose={handleClose}
+        uuid={uuid}
+        dwarfId={dwarfId}
+      />
     </Box>
   );
 };

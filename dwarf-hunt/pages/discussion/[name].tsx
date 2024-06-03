@@ -6,7 +6,6 @@ import { GoogleMap, Circle, useLoadScript } from "@react-google-maps/api";
 import { Box, Typography } from "@mui/material";
 
 import NavBar from "../../components/NavBar";
-import AddComentButton from "../../components/AddComentButton";
 import {
   CommentComponent,
   CommentReply,
@@ -176,7 +175,6 @@ export default function Discussion() {
         )}
         {!dwarfData && name ? <div>404 - Dwarf not found</div> : null}
         <Box sx={{ maxHeight: "250px", overflow: "auto" }}>
-          <AddComentButton />
           {comments.map((comment) => {
             return (
               <CommentComponent
@@ -184,7 +182,7 @@ export default function Discussion() {
                 author={comment.accounts.username}
                 comment={comment.content}
               >
-                {replies.map((reply, index) => {
+                {/* {replies.map((reply, index) => {
                   return (
                     <CommentReply
                       key={index}
@@ -194,7 +192,7 @@ export default function Discussion() {
                       // index <= 3 ? index + 1 : 4}
                     />
                   );
-                })}
+                })} */}
               </CommentComponent>
             );
           })}
